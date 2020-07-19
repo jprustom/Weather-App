@@ -8,7 +8,10 @@ export const geocode = (address:string,callback:Function)=>{
     fetch(geocodeURL)
         .then((fetchedData: { json: () => any; })=>fetchedData.json())
         .then((parsedJson: { features: { center: number[]; }[]; })=>{
-        callback(parsedJson)
+        callback({
+            longtitude:parsedJson.features[0].center[0],
+            latitude:parsedJson.features[0].center[1]
+        })
         })
         .catch((err: { message: any; })=>console.log(chalk.red.bold(err.message)))
 

@@ -2,6 +2,7 @@
 import express from 'express';
 import {geocode} from './geocode';
 import {forecast} from './forecast'
+const chalk=require('chalk')
 const morgan = require("morgan");
 
 
@@ -10,23 +11,21 @@ const app=express();
 app.use(morgan('dev'));
 
 
-geocode('Beirut',(parsedJson: { features: { center: number[]; }[]; })=>{
+const address=process.argv[2]
+if (!address)
+    console.log(chalk.bold.underline.red("Hey, you have to provide an address in your terminal !"))
 
-        let longtitude:number=parsedJson.features[0].center[0]
-        let latitude:number=parsedJson.features[0].center[1]
-     
-        forecast(longtitude,latitude,((parsedJsonWeatherData: { weather: { main: string; }[]; name: string; })=>{
-             let weatherDescription:string=parsedJsonWeatherData.weather[0].main;
-             let city:string=parsedJsonWeatherData.name
-            console.log('The weather at '+ city +' is characterized with '+weatherDescription)
-        }))
-    });
+else 
+    geocode(address,({longtitude,latitude}:{longtitude:number,latitude:number})=>{
 
 
+        forecast(longtitude,latitude,({weatherDescription,city,temperature}:{weatherDescription:string,city:string,temperature:number})=>{
+             
+            console.log(weatherDescription+' in '+city+`. The current temperature is ${temperature} Degrees.`)
+        })
+    })
 
 
-   
-   
 
 
 module.exports=app;

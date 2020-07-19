@@ -10,8 +10,12 @@ exports.forecast = function (lon, lat, callback) {
     var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?' + 'lat=' + lat + '&lon=' + lon + '&appid=' + weatherApiKey + '&units=' + unitsUsed + '&lang=' + language;
     fetch(weatherURL)
         .then(function (fetchedData) { return fetchedData.json(); })
-        .then(function (parsedJson) {
-        callback(parsedJson);
+        .then(function (parsedJsonWeatherData) {
+        callback({
+            weatherDescription: parsedJsonWeatherData.weather[0].main,
+            city: parsedJsonWeatherData.name,
+            temperature: parsedJsonWeatherData.main.temp
+        });
     })
         .catch(function (err) { return console.log(chalk.red.bold('In forecast: ' + err.message)); });
 };

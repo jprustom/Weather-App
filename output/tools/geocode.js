@@ -9,7 +9,10 @@ exports.geocode = function (address, callback) {
     fetch(geocodeURL)
         .then(function (fetchedData) { return fetchedData.json(); })
         .then(function (parsedJson) {
-        callback(parsedJson);
+        callback({
+            longtitude: parsedJson.features[0].center[0],
+            latitude: parsedJson.features[0].center[1]
+        });
     })
         .catch(function (err) { return console.log(chalk.red.bold(err.message)); });
 };
