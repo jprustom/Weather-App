@@ -1,0 +1,28 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "A Basic Weather Api",
+  "keywords": [
+    "Weather",
+    "Api",
+    "Requests",
+    "Fetch"
+  ],
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon output/server.js",
+    "tsc": "tsc"
+  },
+  "author": "Jean-Paul Rustom",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.7",
+    "chalk": "^4.1.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.7"
+  }
+}
